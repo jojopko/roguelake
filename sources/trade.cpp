@@ -1,6 +1,6 @@
 #include "trade.h"
 
-Item* spawn_item(ItemType type, int value, int id, char name, int cost, int damage)
+Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage)
 {
     Item* item = (Item*)malloc(sizeof(Item));
     item->id = id;
@@ -13,21 +13,21 @@ Item* spawn_item(ItemType type, int value, int id, char name, int cost, int dama
 }
 
 //Вывод информации о предмете
-void print_item_info(ItemType type, int value, char name, int cost, int damage)
+void print_item_info(ItemType type, int value, const char* name, int cost, int damage)
 {
     printf("%s\n%s\n%d\n%d\n%d", name, type, damage, value, cost);
 }
 
 void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC)
 {
-    int* select_item;
+    int select_item;
     Item* temp_item;
     printf("Vvedite nomer predmeta, kotoriy hotite prodat'\n");
     do {
-        scanf_s("%d", *select_item);
-        if (*select_item > 9 || *select_item < 1) printf("Ykazan neverniy nomer predmeta\n");
-    } while (*select_item > 9 || *select_item < 1);
-    switch (*select_item)
+        scanf_s("%d", &select_item);
+        if (select_item > 9 || select_item < 1) printf("Ykazan neverniy nomer predmeta\n");
+    } while (select_item > 9 || select_item < 1);
+    switch (select_item)
     {
     case 1:
         if (Inventory_Person.items[0].type != None)
@@ -837,14 +837,14 @@ void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC)
 
 void item_buy(Inventory Inventory_Person, Inventory Inventory_NPC)
 {
-    int* select_item;
+    int select_item;
     Item* temp_item;
     printf("Vvedite nomer predmeta, kotoriy hotite kypit'\n");
     do {
-        scanf_s("%d", *select_item);
-        if (*select_item > 9 || *select_item < 1) printf("Ykazan neverniy nomer predmeta\n");
-    } while (*select_item > 9 || *select_item < 1);
-    switch (*select_item)
+        scanf_s("%d", &select_item);
+        if (select_item > 9 || select_item < 1) printf("Ykazan neverniy nomer predmeta\n");
+    } while (select_item > 9 || select_item < 1);
+    switch (select_item)
     {
     case 1:
         if (Inventory_NPC.items[0].type != None)

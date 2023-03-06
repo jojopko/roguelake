@@ -17,7 +17,7 @@ enum ItemType {
 struct Item {
     int id;
     ItemType type;
-    char name; // название
+    const char* name; // название
     int value; // зависит от type. если health - то насколько восстановится
     int cost; // цена предмета
     int damage; // урон
@@ -28,8 +28,8 @@ struct Inventory {
     Item items[9];
 };
 
-Item* spawn_item(ItemType type, int value, int id, char name, int cost, int damage);
-void print_item_info(ItemType type, int value, char name, int cost, int damage);
+Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage);
+void print_item_info(ItemType type, int value, const char* name, int cost, int damage);
 void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC);
 void item_buy(Inventory Inventory_Person, Inventory Inventory_NPC);
 #endif
