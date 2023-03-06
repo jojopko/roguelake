@@ -28,8 +28,8 @@ struct Inventory {
     Item items[9];
 };
 
-Item* spawn_item(ItemType type, int value, int id, char name, int cost);
-void print_item_info(ItemType type, int value, char name, int cost);
+Item* spawn_item(ItemType type, int value, int id, char name, int cost, int damage);
+void print_item_info(ItemType type, int value, char name, int cost, int damage);
 void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC);
 void item_buy(Inventory Inventory_Person, Inventory Inventory_NPC);
 #endif
