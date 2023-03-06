@@ -5,11 +5,11 @@ project(Stalker_Roguelike)
 set(CMAKE_CURRENT_SOURCE_DIR source/)
 
 set(SOURCES sources/main.cpp
-            sources/draw.cpp
+            sources/level.cpp
             sources/figth.cpp
             sources/trade.cpp)
 
-set(HEADERS sources/draw.h
+set(HEADERS sources/level.h
             sources/figth.h
             sources/trade.h)
 
