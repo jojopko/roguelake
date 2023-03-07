@@ -1,4 +1,8 @@
+#ifndef _FIGTH_H_
+#define _FIGTH_H_
+
 #include <math.h>
+#include "trade.h"
 
 #ifdef _WIN32
 
@@ -10,7 +14,6 @@ char GetKeyState(int virtkey);
 
 #endif
 
-#include "trade.h"
 // стр Игрока
 // стр Врага
 
@@ -37,3 +40,5 @@ void setPlayer(Player* setspawn, Player* sethp, Player* setarmor, int dx, int dy
 void movePlayer(Player* player);
 
 void FigthPlayer(Player* php, Enemy* ehp); //php-хп игрока ehp хп врага
+
+#endif
