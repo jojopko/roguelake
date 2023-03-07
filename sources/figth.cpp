@@ -4,19 +4,23 @@
 #include "level.h"
 
 // Добавить функцию инициализации Player (чекай spawn_item)
-void Player_Init(Player* player, int dx, int dy, int hp, int attack ) {
-	player->x = dx;
-	player->y = dy;
+Player* Player_Init(int x, int y, int hp, int attack ) {
+	Player* player = (Player*)malloc(sizeof(Player));
+	player->x = x;
+	player->y = y;
 	player->hp = hp;
 	player->default_attack = attack;
+	return player;
 }
 
 
-void Enemy_Init(Enemy* enemy, int dx, int dy, int hp, int attack) {
-	enemy->x = dx;
-	enemy->y = dy;
+Enemy* Enemy_Init(int x, int y, int hp, int attack) {
+	Enemy* enemy = (Enemy*)malloc(sizeof(Enemy));
+	enemy->x = x;
+	enemy->y = y;
 	enemy->hp = hp;
 	enemy->default_attack = attack;
+	return enemy;
 
 }
 
