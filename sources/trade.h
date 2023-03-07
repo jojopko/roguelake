@@ -7,6 +7,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+
+#define scanf_s scanf_s
+
+#else
+
+#define scanf_s scanf
+
+#endif
+
+
+
 enum ItemType {
     None,
     Health,

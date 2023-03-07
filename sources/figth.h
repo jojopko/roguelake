@@ -1,5 +1,15 @@
 #include <math.h>
+
+#ifdef _WIN32
+
 #include <Windows.h>
+
+#else
+
+char GetKeyState(int virtkey);
+
+#endif
+
 #include "trade.h"
 // стр Игрока
 // стр Врага
