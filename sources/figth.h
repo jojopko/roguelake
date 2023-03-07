@@ -2,7 +2,6 @@
 #define _FIGTH_H_
 
 #include <math.h>
-#include "trade.h"
 
 #ifdef _WIN32
 
@@ -19,6 +18,7 @@ short GetKeyState(int virtkey);
 
 // Боевка
 // Перемещение
+struct Item;
 
 struct Player {
 	int x;
@@ -34,8 +34,11 @@ struct Enemy {
 	int hp;
 	int default_attack;
 };
+void Player_Init(Player* player);
 
-void setPlayer(Player* setspawn, Player* sethp, Player* setarmor, int dx, int dy, int dhp);
+void Enemy_Init(Enemy* enemy);
+
+void setPlayer(Player* player, int dx, int dy, int dhp);
 
 void movePlayer(Player* player);
 
