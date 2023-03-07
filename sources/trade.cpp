@@ -14,12 +14,12 @@ Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, i
 }
 
 
-//Вывод информации о предмете
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage)
 {
     printf("%s\n%d\n%d\n%d\n", name, damage, value, cost);
 }
-//Предметы
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 Item* items(ItemType type, int value, int id, const char* name, int cost, int damage)
 {
     Item* healing_potion = (Item*)malloc(sizeof(Item));
@@ -52,7 +52,7 @@ Item* items(ItemType type, int value, int id, const char* name, int cost, int da
     return healing_potion, sword, bow, breastplate;
 }
 
-void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item, Item* money_item)
+void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item)
 {
     bool f = 0; 
     if ((player->x == item->x) && (player->y == item->y))
@@ -60,9 +60,9 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
         {
             if (Inventory_Person->items[i].type == None)
             {
-                if (Inventory_Person->items[i].type == Money)
+                if (item->type == Money)
                 {
-                    Inventory_Person->cash += money_item->value;
+                    Inventory_Person->cash += item->value;
                     break;
                 }
                 f = 1;
@@ -73,7 +73,7 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
     if (f == 0)
         printf("Net svobodnogo mesta\n");
 }
-//Продажа предметов
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC)
 {
     int select_item;
@@ -853,7 +853,7 @@ void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC)
         break;
     }
 }
-//Покупка предметов
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC)
 {
     int select_item;
@@ -1671,7 +1671,7 @@ void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC)
         break;
     }
 }
-//Опустошение инвентаря
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void emptying_the_array(Inventory* Gear)
 {
     for (int i = 1; i < 9; i++) {
