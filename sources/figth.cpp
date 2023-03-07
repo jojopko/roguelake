@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "figth.h"
 #include "trade.h"
+
+// Добавить функцию инициализации Player (чекай spawn_item)
+
+
+// Убрать повторяющиеся параметры
 void setPlayer(Player* setspawn, Player* sethp, Player* setarmor, int dx, int dy, int dhp) {
 	(*setspawn).x = dx;
 	(*setspawn).y = dy;
@@ -14,6 +19,7 @@ void movePlayer(Player* player) {
 	if (GetKeyState('A') < 0) (*player).x--;
 	if (GetKeyState('D') < 0) (*player).x++;
 }
+
 void FigthPlayer(Player* player, Enemy* enemy) {
 	int n;
 	bool leave_fight = false;
@@ -30,6 +36,7 @@ void FigthPlayer(Player* player, Enemy* enemy) {
 			leave_fight = true;
 			break;
 		case 3:			// ���������
+			// здесь надо реализовать логику с инвентрем (пробежаться в поисках аптечки)
 			player->hp += 100000; //�������� ����� ������� ���� �������
 			player->hp -= enemy->default_attack;
 			break;
