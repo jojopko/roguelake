@@ -29,12 +29,32 @@ void setPlayer(Player* player, int dx, int dy, int dhp) {
 
 }
 
-void movePlayer(Player* player) {
+void movePlayer(Player* player, Level* level) {
+
+	if (GetKeyState('W') < 0) {
+		(*player).y--;
+		if (is_wall(level, player->x, player->y))
+			(*player).y++;
+
+	}
+	if (GetKeyState('S') < 0){ 
+		(*player).y++;
+		if (is_wall(level, player->x, player->y))
+			(*player).y--;
 	
-	if (GetKeyState('W') < 0) (*player).y--;
-	if (GetKeyState('S') < 0) (*player).y++;
-	if (GetKeyState('A') < 0) (*player).x--;
-	if (GetKeyState('D') < 0) (*player).x++;
+	}
+	if (GetKeyState('A') < 0) {
+		(*player).x--;
+		if (is_wall(level, player->x, player->y))
+			(*player).x++;
+
+	}
+	if (GetKeyState('D') < 0) {
+		(*player).x++;
+		if (is_wall(level, player->x, player->y))
+			(*player).x--;
+
+	}
 
 }
 
@@ -59,7 +79,6 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
 			break;
 		case 3:			// health
 			
-		// здесь надо реализовать логику с инвентрем (пробежаться в поисках аптечки)
 			for (int i = 0; i < 9; i++) {
 				if (inventory->items[i].type == Health) {
 					player->hp += 35; //�������� ����� ������� ���� �������
