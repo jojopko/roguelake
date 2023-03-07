@@ -1,7 +1,7 @@
 #include "trade.h"
 
 
-Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage)
+Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage, int x, int y)
 {
     Item* item = (Item*)malloc(sizeof(Item));
     item->id = id;
@@ -10,6 +10,8 @@ Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, i
     item->cost = cost;
     item->value = value;
     item->damage = damage;
+    item->x = x;
+    item->y = y;
     return item;
 }
 
