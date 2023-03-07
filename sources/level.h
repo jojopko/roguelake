@@ -35,4 +35,8 @@ void clear(Camera * camera);
 
 void draw_player(Camera *camera, const Player * player);
 
+void draw_item(Camera * camera, const Item * item);
+
+int getch();
+
 #endif
