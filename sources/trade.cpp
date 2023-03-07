@@ -12,6 +12,8 @@ Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, i
     item->damage = damage;
     return item;
 }
+
+
 //Вывод информации о предмете
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage)
 {
@@ -50,7 +52,7 @@ Item* items(ItemType type, int value, int id, const char* name, int cost, int da
     return healing_potion, sword, bow, breastplate;
 }
 
-void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item)
+void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item, Item* money_item)
 {
     bool f = 0; 
     if ((player->x == item->x) && (player->y == item->y))
@@ -58,6 +60,11 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
         {
             if (Inventory_Person->items[i].type == None)
             {
+                if (Inventory_Person->items[i].type == Money)
+                {
+                    Inventory_Person->cash += money_item->value;
+                    break;
+                }
                 f = 1;
                 Inventory_Person->items[i] = *item;
                 break;
