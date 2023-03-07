@@ -39,4 +39,6 @@ void draw_item(Camera * camera, const Item * item);
 
 int getch();
 
+bool is_wall(Level * level, int x, int y);
+
 #endif
