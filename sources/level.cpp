@@ -148,7 +148,7 @@ void draw_item(Camera * camera, const Item * item){
        (player_cam_y >= 0 && player_cam_y < camera->h)) {
         if (item->type == Health)
             camera->surface[player_cam_y * camera->w + item_cam_x] = 'O';
-        else if (item->type == Knife)
+        else if (item->type == Melee)
             camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
         else 
             camera->surface[player_cam_y * camera->w + item_cam_x] = '-';
