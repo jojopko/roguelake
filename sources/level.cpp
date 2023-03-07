@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
 #include "level.h"
 
 
@@ -89,8 +91,27 @@ void draw(Camera * camera){
     }
 }
 
+
+
+
 #if __linux__
+int getch() {
+    struct termios oldtc;
+    struct termios newtc;
+    int ch;
+    tcgetattr(STDIN_FILENO, &oldtc);
+    newtc = oldtc;
+    newtc.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newtc);
+    ch=getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldtc);
+    return ch;
+}
+
 short GetKeyState(int virtkey) {
+    int c = getch();
+    if (c == virtkey) 
+        return -1;
     return 0;
 }
 #endif
@@ -112,9 +133,25 @@ void draw_player(Camera *camera, const Player * player){
     int player_cam_x = (player->x - camera->offset_x);
     int player_cam_y = (player->y - camera->offset_y);
     if((player_cam_x >= 0 && player_cam_x < camera->w) && 
-       (player_cam_y >= 0 && player_cam_y < camera->w)) {
+       (player_cam_y >= 0 && player_cam_y < camera->h)) {
         camera->surface[player_cam_y * camera->w + player_cam_x] = '@';
     }
 }
 
+void draw_item(Camera * camera, const Item * item){
+    int item_x = 9;
+    int item_y = 9;
+    int item_cam_x = (item_x - camera->offset_x);
+    int player_cam_y = (item_y - camera->offset_y);
+    if((item_cam_x >= 0 && item_cam_x < camera->w) && 
+       (player_cam_y >= 0 && player_cam_y < camera->h)) {
+        if (item->type == Health)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = 'O';
+        else if (item->type == Knife)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
+        else 
+            camera->surface[player_cam_y * camera->w + item_cam_x] = '-';
+
+    }
+}
 
