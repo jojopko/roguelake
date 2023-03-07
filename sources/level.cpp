@@ -89,3 +89,30 @@ void draw(Camera * camera){
     }
 }
 
+short GetKeyState(int virtkey) {
+    return 0;
+}
+
+void clear(Camera * camera) {
+    for (int y = 0; y < camera->h; y++) {
+        for(int x = 0; x < camera->w; x++){
+            camera->surface[y*camera->w + x] = '#';
+        }
+    }
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+void draw_player(Camera *camera, const Player * player){
+    int player_cam_x = (player->x - camera->offset_x);
+    int player_cam_y = (player->y - camera->offset_y);
+    if((player_cam_x >= 0 && player_cam_x < camera->w) && 
+       (player_cam_y >= 0 && player_cam_y < camera->w)) {
+        camera->surface[player_cam_y * camera->w + player_cam_x] = '@';
+    }
+}
+
+
