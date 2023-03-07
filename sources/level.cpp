@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
 #include "level.h"
 
 
@@ -95,6 +93,9 @@ void draw(Camera * camera){
 
 
 #if __linux__
+#include <termios.h>
+#include <unistd.h>
+
 int getch() {
     struct termios oldtc;
     struct termios newtc;
