@@ -21,7 +21,7 @@ void print_item_info(ItemType type, int value, const char* name, int cost, int d
 void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC)
 {
     int select_item;
-    Item* temp_item;
+    Item* temp_item = (Item*)malloc(sizeof(Item));
     printf("Vvedite nomer predmeta, kotoriy hotite prodat'\n");
     do {
         scanf_s("%d", &select_item);
@@ -831,14 +831,16 @@ void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC)
         else printf("Yacheyka pysta\n");
         break;
     default:
+        printf("Ykazan neverniy nomer predmerta");
         break;
+        free(temp_item);
     }
 }
 
 void item_buy(Inventory Inventory_Person, Inventory Inventory_NPC)
 {
     int select_item;
-    Item* temp_item;
+    Item* temp_item = (Item*)malloc(sizeof(Item));
     printf("Vvedite nomer predmeta, kotoriy hotite kypit'\n");
     do {
         scanf_s("%d", &select_item);
@@ -1650,5 +1652,6 @@ void item_buy(Inventory Inventory_Person, Inventory Inventory_NPC)
 
     default: printf("Ykazan neverniy nomer predmerta");
         break;
+        free(temp_item);
     }
 }
