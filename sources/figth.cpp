@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <Windows.h>
 #include "figth.h"
 #include "trade.h"
 void setPlayer(Player* setspawn, Player* sethp, Player* setarmor, int dx, int dy, int dhp) {
@@ -19,19 +18,19 @@ void FigthPlayer(Player* player, Enemy* enemy) {
 	int n;
 	bool leave_fight = false;
 	while ((enemy->hp > 0 && player->hp > 0) || leave_fight) {
-		printf("Viberty deistvie - ");    // Ñäåëàòü ïðîâåðêó 
+		printf("Viberty deistvie - ");    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		scanf("%d", &n);
 		switch (n) {
-		case 1:			// ÀÒÀÊÀ
+		case 1:			// ï¿½ï¿½ï¿½ï¿½ï¿½
 			enemy->hp -= player->default_attack + player->item_weapon->damage;
 			player->hp -= enemy->default_attack;
 			break;
-		case 2:			// ÓÁÅÆÀÒÜ
+		case 2:			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			player->hp -= enemy->default_attack;
 			leave_fight = true;
 			break;
-		case 3:			// ÂÛËÅ×ÈÒÑß
-			player->hp += 100000; //çàãëóøêà íóæíî ñäåëàòü íîðì ëå÷èëêó
+		case 3:			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			player->hp += 100000; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			player->hp -= enemy->default_attack;
 			break;
 		}
