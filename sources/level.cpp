@@ -89,9 +89,11 @@ void draw(Camera * camera){
     }
 }
 
+#if __linux__
 short GetKeyState(int virtkey) {
     return 0;
 }
+#endif
 
 void clear(Camera * camera) {
     for (int y = 0; y < camera->h; y++) {
