@@ -2,7 +2,7 @@
 #define _LEVEL_
 
 #include "figth.h"
-
+#include "trade.h"
 // Карту
 // Камеру
 // перемещение камеры
