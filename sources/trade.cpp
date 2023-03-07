@@ -15,7 +15,7 @@ Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, i
 //Вывод информации о предмете
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage)
 {
-    printf("%s\n%s\n%d\n%d\n%d", name, type, damage, value, cost);
+    printf("%s\n%d\n%d\n%d\n", name, damage, value, cost);
 }
 
 void item_sell(Inventory Inventory_Person, Inventory Inventory_NPC)
