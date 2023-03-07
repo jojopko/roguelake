@@ -10,7 +10,7 @@
 
 #else
 
-char GetKeyState(int virtkey);
+short GetKeyState(int virtkey);
 
 #endif
 
