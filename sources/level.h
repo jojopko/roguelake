@@ -37,7 +37,11 @@ void draw_player(Camera *camera, const Player * player);
 
 void draw_item(Camera * camera, const Item * item);
 
+void draw_enemy(Camera * camera, const Enemy * enemy);
+
+#if __linux__
 int getch();
+#endif
 
 bool is_wall(Level * level, int x, int y);
 

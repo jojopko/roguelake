@@ -140,10 +140,8 @@ void draw_player(Camera *camera, const Player * player){
 }
 
 void draw_item(Camera * camera, const Item * item){
-    int item_x = 9;
-    int item_y = 9;
-    int item_cam_x = (item_x - camera->offset_x);
-    int player_cam_y = (item_y - camera->offset_y);
+    int item_cam_x = (item->x - camera->offset_x);
+    int player_cam_y = (item->y - camera->offset_y);
     if((item_cam_x >= 0 && item_cam_x < camera->w) && 
        (player_cam_y >= 0 && player_cam_y < camera->h)) {
         if (item->type == Health)
@@ -153,6 +151,15 @@ void draw_item(Camera * camera, const Item * item){
         else 
             camera->surface[player_cam_y * camera->w + item_cam_x] = '-';
 
+    }
+}
+
+void draw_enemy(Camera * camera, const Enemy * enemy) {
+    int enemy_cam_x = (enemy->x - camera->offset_x);
+    int enemy_cam_y = (enemy->y - camera->offset_y);
+    if((enemy_cam_x >= 0 && enemy_cam_x < camera->w) && 
+       (enemy_cam_y >= 0 && enemy_cam_y < camera->h)) {
+        camera->surface[enemy_cam_y * camera->w + enemy_cam_x] = 'A';
     }
 }
 
