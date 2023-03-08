@@ -45,4 +45,8 @@ int getch();
 
 bool is_wall(Level * level, int x, int y);
 
+bool is_enemy(Level * level, int x, int y);
+
+
+
 #endif

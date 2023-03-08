@@ -2,6 +2,9 @@
 #include "figth.h"
 #include "trade.h"
 #include "level.h"
+//Боевка. Если игрок и враг в одной клетке, то мы начинаем бой. Если игрок бежит из битвы, то мы возвращаемся в прошлую клетку. 
+//Если побеждаем остаемся в той же клетке. @MXTIGV187
+//Боевка.Протестировать всю систему : создать несколько предметов разных типов, эксперементировать с инвентарями в условиях боя.
 
 // Добавить функцию инициализации Player (чекай spawn_item)
 Player* Player_Init(int x, int y, int hp, int attack ) {
@@ -37,7 +40,8 @@ void setPlayer(Player* player, int dx, int dy, int dhp) {
 // Если это винда, то будет этот код
 
 void movePlayer(Player* player, Level* level) {
-
+	player->prev_x = player->x;
+	player->prev_y = player->y;
 	if (GetKeyState('W') < 0) {
 		(*player).y--;
 		if (is_wall(level, player->x, player->y))
@@ -95,8 +99,14 @@ void movePlayer(Player* player, Level* level) {
 
 #endif
 
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
+	if (is_enemy(level, player->x, player->y)) {
+		FigthPlayer(player, enemy, inventory,level);
+	}
+}
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
+
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
@@ -114,6 +124,8 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
 		case 2:			// leave fight
 			player->hp -= enemy->default_attack;
 			leave_fight = true;
+			player->x = player->prev_x;
+			player->y = player->prev_y;
 			break;
 		case 3:			// health
 			
@@ -135,3 +147,4 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
 	
 
 }
+

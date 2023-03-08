@@ -28,6 +28,8 @@ struct Player {
 	int hp;
 	int default_attack;
 	Item* item_weapon;
+	int prev_x;
+	int prev_y;
 };
 
 struct Enemy {
@@ -45,6 +47,8 @@ void setPlayer(Player* player, int dx, int dy, int dhp);
 
 void movePlayer(Player* player, Level* level);
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory); //php-хп игрока ehp хп врага
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
+
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
 
 #endif
