@@ -20,6 +20,7 @@ short GetKeyState(int virtkey);
 // Перемещение
 struct Item;
 struct Level;
+struct Inventory;
 
 struct Player {
 	int x;
@@ -44,6 +45,6 @@ void setPlayer(Player* player, int dx, int dy, int dhp);
 
 void movePlayer(Player* player, Level* level);
 
-void FigthPlayer(Player* php, Enemy* ehp); //php-хп игрока ehp хп врага
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory); //php-хп игрока ehp хп врага
 
 #endif
