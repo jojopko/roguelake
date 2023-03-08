@@ -55,5 +55,7 @@ void emptying_the_array(Inventory* Gear);
 
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage);
 Item* items(ItemType type, int value, int id, const char* name, int cost, int damage);
+void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC);
+void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC);
 #endif
 
