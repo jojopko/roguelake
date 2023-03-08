@@ -158,13 +158,12 @@ void draw_item(Camera * camera, const Item * item){
 
 bool is_wall(Level * level, int x, int y) {
     char * field = level->field;
-    for (int y = 0; y < level->h; y++) {
-        for (int x = 0; x < level->w; x++) {
-            int index = y * level->w + x;
-            if (field[index] == '#')
-                return true;
-        }
-    }
+    int index = y * level->w + x;
+    printf("%d", index);
+    if (field[index] == '#')
+        return true;
     return false;
 }
+
+
 

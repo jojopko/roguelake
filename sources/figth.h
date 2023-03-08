@@ -19,6 +19,7 @@ short GetKeyState(int virtkey);
 // Боевка
 // Перемещение
 struct Item;
+struct Level;
 
 struct Player {
 	int x;
@@ -34,13 +35,14 @@ struct Enemy {
 	int hp;
 	int default_attack;
 };
-void Player_Init(Player* player);
 
-void Enemy_Init(Enemy* enemy);
+Player* Player_Init(int x, int y, int hp, int attack);
+
+Enemy* Enemy_Init(int x, int y, int hp, int attack);
 
 void setPlayer(Player* player, int dx, int dy, int dhp);
 
-void movePlayer(Player* player);
+void movePlayer(Player* player, Level* level);
 
 void FigthPlayer(Player* php, Enemy* ehp); //php-хп игрока ehp хп врага
 

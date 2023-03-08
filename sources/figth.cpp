@@ -33,6 +33,9 @@ void setPlayer(Player* player, int dx, int dy, int dhp) {
 
 }
 
+#ifdef _WIN32
+// Если это винда, то будет этот код
+
 void movePlayer(Player* player, Level* level) {
 
 	if (GetKeyState('W') < 0) {
@@ -62,6 +65,37 @@ void movePlayer(Player* player, Level* level) {
 
 }
 
+#else
+// На линуксе -- этот
+
+void movePlayer(Player* player, Level* level) {
+	int c = getch();
+	
+	if (c == 'w') {
+		(*player).y--;
+		if (is_wall(level, player->x, player->y))
+			(*player).y++;
+	}
+	if (c == 's'){ 
+		(*player).y++;
+		if (is_wall(level, player->x, player->y))
+			(*player).y--;
+	}
+	if (c == 'a') {
+		(*player).x--;
+		if (is_wall(level, player->x, player->y))
+			(*player).x++;
+	}
+	if (c == 'd') {
+		(*player).x++;
+		if (is_wall(level, player->x, player->y))
+			(*player).x--;
+	}
+}
+
+#endif
+
+
 void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
 	int n;
 	bool leave_fight = false;
@@ -85,14 +119,14 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory) {
 			
 			for (int i = 0; i < 9; i++) {
 				if (inventory->items[i].type == Health) {
-					player->hp += 35; //�������� ����� ������� ���� �������
+					player->hp += inventory->items[i].value; //�������� ����� ������� ���� �������
 					player->hp -= enemy->default_attack;
 					f = 1;
 					break;
 				}
 			}
 			if (f == 0){
-				printf("Net aptechki");
+				// printf("Net aptechki");
 				player->hp -= enemy->default_attack;
 			}
 			
