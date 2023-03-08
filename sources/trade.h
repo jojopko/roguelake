@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "figth.h"
+#include "dialog.h"
 
 #ifdef _WIN32
 
@@ -21,6 +22,7 @@
 struct NPC {
     int x;
     int y;
+    TypeNPC type;
     Inventory* Inventory_NPC;
 };
 

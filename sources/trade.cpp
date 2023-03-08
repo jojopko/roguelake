@@ -15,12 +15,12 @@ Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, i
     return item;
 }
 
-NPC* spawn_NPC(int x, int y, Inventory Inventory_NPC)
+NPC* spawn_NPC(int x, int y, Inventory* Inventory_NPC)
 {
     NPC* npc = (NPC*)malloc(sizeof(NPC));
     npc->x = x;
     npc->y = y;
-    npc->Inventory_NPC = &Inventory_NPC;
+    npc->Inventory_NPC = Inventory_NPC;
     return npc;
 }
 
