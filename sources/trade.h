@@ -18,7 +18,11 @@
 
 #endif
 
-
+struct NPC {
+    int x;
+    int y;
+    Inventory* Inventory_NPC;
+};
 
 enum ItemType {
     None,
@@ -52,6 +56,7 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
 void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC);
 void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC);
 void emptying_the_array(Inventory* Gear);
+NPC* spawn_NPC(int x, int y, Inventory Inventory_NPC);
 
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage);
 Item* items(ItemType type, int value, int id, const char* name, int cost, int damage);
