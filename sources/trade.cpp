@@ -85,8 +85,8 @@ void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC)
             {
                 Inventory_NPC->items[j] = Inventory_Person->items[i];
                 Inventory_Person->items[i].type = None;
-                Inventory_NPC->cash -= Inventory_Person->items[j].cost;
-                Inventory_Person->cash += Inventory_Person->items[j].cost;
+                Inventory_NPC->cash -= Inventory_Person->items[i].cost;
+                Inventory_Person->cash += Inventory_Person->items[i].cost;
                 f = 1;
                 break;
             }
