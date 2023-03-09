@@ -33,33 +33,26 @@ void Enemy_AI(Enemy* enemy, Level* level) {
 	int random;
 	hp_post=enemy->hp;
 	if (enemy->hp > 0) {
-		for (int i = 0; hp_post > 0; i++) {
-			random = rand() % 5;
-			if (random == 1) {
-				enemy->x++;
-				if (is_wall(level, enemy->x, enemy->y))
-					(*enemy).x--;
-
-			}
-			if (random == 2) {
-				enemy->x--;
-				if (is_wall(level, enemy->x, enemy->y))
-					(*enemy).x++;
-
-			}
-			if (random == 3) {
-				enemy->y++;
-				if (is_wall(level, enemy->x, enemy->y))
-					(*enemy).y--;
-
-			}
-			if (random == 4) {
-				enemy->y--;
-				if (is_wall(level, enemy->x, enemy->y))
-					(*enemy).y++;
-
-			}
-			i++;
+		random = rand() % 16;
+		if (random == 1) {
+			enemy->x++;
+			if (is_wall(level, enemy->x, enemy->y))
+				(*enemy).x--;
+		}
+		if (random == 2) {
+			enemy->x--;
+			if (is_wall(level, enemy->x, enemy->y))
+				(*enemy).x++;
+		}
+		if (random == 3) {
+			enemy->y++;
+			if (is_wall(level, enemy->x, enemy->y))
+				(*enemy).y--;
+		}
+		if (random == 4) {
+			enemy->y--;
+			if (is_wall(level, enemy->x, enemy->y))
+				(*enemy).y++;
 		}
 	}
 
@@ -169,12 +162,12 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 		switch (n) {
 		case 1:			// attack
 			if (player->item_weapon != NULL && player->item_weapon->type!=None) {
-			player->hp -= enemy->default_attack;
-			enemy->hp -= player->default_attack;
+				player->hp -= enemy->default_attack;
+				enemy->hp -= player->default_attack + player->item_weapon->value;
 			}
 			else {
 				player->hp -= enemy->default_attack;
-				enemy->hp -= player->default_attack + player->item_weapon->value;
+				enemy->hp -= player->default_attack;
 				
 			}
 			break;
