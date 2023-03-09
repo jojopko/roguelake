@@ -30,6 +30,9 @@ struct Player {
 	Item* item_weapon;
 	int prev_x;
 	int prev_y;
+	bool killQuest = 0;
+	int killQuestCounter = 0;
+	bool findQuest = 0;
 };
 
 struct Enemy {

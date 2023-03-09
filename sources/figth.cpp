@@ -156,8 +156,15 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 			
 		}
 	}
-	
-
+	if (player->killQuest == 1 && enemy->hp <= 0)
+	{
+		player->killQuestCounter += 1;
+		if (player->killQuestCounter >= 10)
+		{
+			inventory->cash += 200;
+			player->killQuest = 0;
+		}
+	}
 }
 
 // FIXME: почему то кода выходишь из боя, потом нельзя сного начать биться
