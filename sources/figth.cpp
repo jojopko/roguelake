@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<stdlib.h>
 #include "figth.h"
 #include "trade.h"
 #include "level.h"
@@ -24,6 +25,43 @@ Enemy* Enemy_Init(int x, int y, int hp, int attack) {
 	enemy->hp = hp;
 	enemy->default_attack = attack;
 	return enemy;
+
+}
+
+void Enemy_AI(Enemy* enemy, Level* level) {
+	int hp_post;
+	int random;
+	hp_post=enemy->hp;
+	if (enemy->hp > 0) {
+		for (int i = 0; hp_post > 0; i++) {
+			random = rand() % 5;
+			if (random == 1) {
+				enemy->x++;
+				if (is_wall(level, enemy->x, enemy->y))
+					(*enemy).x--;
+
+			}
+			if (random == 2) {
+				enemy->x--;
+				if (is_wall(level, enemy->x, enemy->y))
+					(*enemy).x++;
+
+			}
+			if (random == 3) {
+				enemy->y++;
+				if (is_wall(level, enemy->x, enemy->y))
+					(*enemy).y--;
+
+			}
+			if (random == 4) {
+				enemy->y--;
+				if (is_wall(level, enemy->x, enemy->y))
+					(*enemy).y++;
+
+			}
+			i++;
+		}
+	}
 
 }
 
@@ -107,18 +145,18 @@ void movePlayer(Player* player, Level* level) {
 
 #endif
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level,Item*item) {
 	// if (is_enemy(level, player->x, player->y)) {
 	// 	FigthPlayer(player, enemy, inventory,level);
 	// }
 
 	if (player->x == enemy->x && player->y == enemy->y){
-		FigthPlayer(player, enemy, inventory, level);
+		FigthPlayer(player, enemy, inventory, level,item);
 	}
 }
 
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level, Item* item) {
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
@@ -130,8 +168,15 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 		} while (n > 3);
 		switch (n) {
 		case 1:			// attack
-			enemy->hp -= player->default_attack + player->item_weapon->damage;
+			if (item->type != NULL && item->type!=None) {
 			player->hp -= enemy->default_attack;
+			enemy->hp -= player->default_attack;
+			}
+			else {
+				player->hp -= enemy->default_attack;
+				enemy->hp -= player->default_attack + player->item_weapon->damage;
+				
+			}
 			break;
 		case 2:			// leave fight
 			player->x = player->prev_x;
