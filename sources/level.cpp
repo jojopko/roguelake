@@ -78,18 +78,69 @@ void draw_level(Camera * camera, const Level * level) {
     }
 }
 
+void draw_stats(Camera * camera, const Player * player) {
+    bool fill_empty = false;
+    char stat[100] = {};
+    int attack = player->default_attack + (player->item_weapon != NULL ? player->item_weapon->damage : 0);
+    sprintf(stat, "HP:%d AP:%d X:%d Y:%d", player->hp, attack, player->x, player->y);
+    for (int i = 0; i < camera->w; i++){
+        if(fill_empty)
+            camera->surface[i] = ' ';
+        if(stat[i] == 0)
+            fill_empty = true;
+        else
+            camera->surface[i] = stat[i];
+    }
+}
+
+void draw_log1(Camera * camera, const char * buffer100) {
+    bool fill_empty = false;
+    for (int i = 0; i < camera->w; i++){
+        int index = (camera->h-2) * camera->w + i;
+        char c = buffer100[i];
+        if(c == '\0')
+            fill_empty = true;
+        if (fill_empty){
+            camera->surface[index] = ' ';
+        }
+        else{
+            camera->surface[index] = c;
+        }
+    }
+}
+
+void draw_log2(Camera * camera, const char * buffer100) {
+    bool fill_empty = false;
+    for (int i = 0; i < camera->w; i++){
+        int index = (camera->h-1) * camera->w + i;
+        char c = buffer100[i];
+        if(c == '\0')
+            fill_empty = true;
+        if (fill_empty){
+            camera->surface[index] = ' ';
+        }
+        else{
+            camera->surface[index] = c;
+        }
+    }
+}
+
 void draw(Camera * camera){
     for (int cam_y = 0; cam_y < camera->h; cam_y++){
         for (int cam_x = 0; cam_x < camera->w; cam_x++){
             int c = camera->surface[cam_y * camera->w + cam_x];
             putchar(c);
         }
-        if (cam_y != camera->h - 1)
+        if (cam_y != camera->h - 1){
             putchar('\n');
+        }
     }
 }
 
-
+void move_camera(Camera *camera, const Player *player) {
+    camera->offset_x = player->x - camera->w / 2;
+    camera->offset_y = player->y - camera->h / 2;
+}
 
 
 #if __linux__
@@ -166,7 +217,6 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
 bool is_wall(Level * level, int x, int y) {
     char * field = level->field;
     int index = y * level->w + x;
-    printf("%d", index);
     if (field[index] == '#')
         return true;
     return false;

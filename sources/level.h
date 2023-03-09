@@ -41,6 +41,12 @@ void draw_enemy(Camera * camera, const Enemy * enemy);
 
 void draw_stats(Camera * camera, const Player * player);
 
+void move_camera(Camera * camera, const Player *player);
+
+void draw_log1(Camera * camera, const char * buffer100);
+
+void draw_log2(Camera * camera, const char * buffer100);
+
 #if __linux__
 int getch();
 #endif
