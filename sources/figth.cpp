@@ -145,18 +145,18 @@ void movePlayer(Player* player, Level* level) {
 
 #endif
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level,Item*item) {
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
 	// if (is_enemy(level, player->x, player->y)) {
 	// 	FigthPlayer(player, enemy, inventory,level);
 	// }
 
 	if (player->x == enemy->x && player->y == enemy->y){
-		FigthPlayer(player, enemy, inventory, level,item);
+		FigthPlayer(player, enemy, inventory, level);
 	}
 }
 
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level, Item* item) {
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
@@ -168,13 +168,13 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 		} while (n > 3);
 		switch (n) {
 		case 1:			// attack
-			if (item->type != NULL && item->type!=None) {
+			if (player->item_weapon != NULL && player->item_weapon->type!=None) {
 			player->hp -= enemy->default_attack;
 			enemy->hp -= player->default_attack;
 			}
 			else {
 				player->hp -= enemy->default_attack;
-				enemy->hp -= player->default_attack + player->item_weapon->damage;
+				enemy->hp -= player->default_attack + player->item_weapon->value;
 				
 			}
 			break;
@@ -183,7 +183,7 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 			player->y = player->prev_y;
 			player->hp -= enemy->default_attack;
 			leave_fight = true;
-			break;
+			break;k 
 		case 3:			// health
 			
 			for (int i = 0; i < 9; i++) {

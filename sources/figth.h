@@ -50,9 +50,9 @@ void setPlayer(Player* player, int dx, int dy, int dhp);
 
 void movePlayer(Player* player, Level* level);
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level, Item* item);
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level, Item* item);
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
 
 bool is_enemy(Level * level, int x, int y);
 
