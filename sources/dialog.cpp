@@ -7,7 +7,13 @@ bool is_npc(Level* level, int x, int y)
 {
 	char* field = level->field;
 	int index = y * level->w + x;
-	if (field[index] == 'N')
+	if (field[index] == '&')
+		return true;
+	if (field[index] == 'O')
+		return true;
+	if (field[index] == '8')
+		return true;
+	if (field[index] == 'Q')
 		return true;
 	return false;
 }
@@ -21,10 +27,11 @@ bool is_book(Level* level, int x, int y)
 	return false;
 }
 
-void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Enemy* enemy, Level* level, Item* item)
+void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Level* level)
 {
 	int answer_choice;
-	if (is_npc(level, player->x, player->y))
+	// if (is_npc(level, player->x, player->y))
+	if (npc->x == player->x && npc->y == player->y)
 	{
 		if (npc->type == Provodnik)
 		{
@@ -45,7 +52,10 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 			{
 			case 1: item_buy(Inventory_Person, Invenroty_NPC); break;
 			case 2: item_sell(Inventory_Person, Invenroty_NPC); break;
-			case 3: break; //leave
+			case 3: 
+				player->x = player->prev_x;
+				player->y = player->prev_y;
+				break; //leave
 			default: break; //leave
 			}
 		}
@@ -66,7 +76,7 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 			scanf_s("%d", &answer_choice);
 			switch (answer_choice)
 			{
-			case 1: quest2(item);  break; //Zapysk mission
+			case 1: quest2();  break; //Zapysk mission
 			case 2:
 				if (player->findQuest == 1)
 				{
@@ -82,7 +92,7 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 
 }
 
-void quest2(Item* item)
+void quest2()
 {
-	spawn_item(Quest, 1, 1001, "Kniga", 0, 0, item->x, item->y);
+	spawn_item(Quest, 1, 1001, "Kniga", 0, 0, 16, 6);
 }

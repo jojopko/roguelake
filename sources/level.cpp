@@ -215,6 +215,22 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
     }
 }
 
+void draw_npc(Camera * camera, const NPC * npc){
+    int npc_cam_x = (npc->x - camera->offset_x);
+    int npc_cam_y = (npc->y - camera->offset_y);
+    if((npc_cam_x >= 0 && npc_cam_x < camera->w) && 
+       (npc_cam_y >= 0 && npc_cam_y < camera->h)) {
+        if (npc->type == Torgovec)
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = '&';
+        if (npc->type == Quest1)
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'O';
+        if (npc->type == Quest2)
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = '8';
+        if (npc->type == Provodnik)
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'Q';
+    }
+}
+
 bool is_wall(Level * level, int x, int y) {
     char * field = level->field;
     int index = y * level->w + x;

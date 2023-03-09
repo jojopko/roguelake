@@ -47,6 +47,8 @@ void draw_log1(Camera * camera, const char * buffer100);
 
 void draw_log2(Camera * camera, const char * buffer100);
 
+void draw_npc(Camera * camera, const NPC * npc);
+
 #if __linux__
 int getch();
 #endif
