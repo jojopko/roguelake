@@ -76,21 +76,29 @@ void movePlayer(Player* player, Level* level) {
 	int c = getch();
 	
 	if (c == 'w') {
+		player->prev_x = player->x;
+		player->prev_y = player->y;
 		(*player).y--;
 		if (is_wall(level, player->x, player->y))
 			(*player).y++;
 	}
 	if (c == 's'){ 
+		player->prev_x = player->x;
+		player->prev_y = player->y;
 		(*player).y++;
 		if (is_wall(level, player->x, player->y))
 			(*player).y--;
 	}
 	if (c == 'a') {
+		player->prev_x = player->x;
+		player->prev_y = player->y;
 		(*player).x--;
 		if (is_wall(level, player->x, player->y))
 			(*player).x++;
 	}
 	if (c == 'd') {
+		player->prev_x = player->x;
+		player->prev_y = player->y;
 		(*player).x++;
 		if (is_wall(level, player->x, player->y))
 			(*player).x--;
@@ -100,8 +108,12 @@ void movePlayer(Player* player, Level* level) {
 #endif
 
 void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
-	if (is_enemy(level, player->x, player->y)) {
-		FigthPlayer(player, enemy, inventory,level);
+	// if (is_enemy(level, player->x, player->y)) {
+	// 	FigthPlayer(player, enemy, inventory,level);
+	// }
+
+	if (player->x == enemy->x && player->y == enemy->y){
+		FigthPlayer(player, enemy, inventory, level);
 	}
 }
 
@@ -110,7 +122,7 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
-	while ((enemy->hp > 0 && player->hp > 0) || leave_fight) {
+	while ((enemy->hp > 0 && player->hp > 0) && !leave_fight) {
 		do {
 
 			printf("Viberty deistvie - ");    // need check proverka
@@ -122,10 +134,10 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 			player->hp -= enemy->default_attack;
 			break;
 		case 2:			// leave fight
-			player->hp -= enemy->default_attack;
-			leave_fight = true;
 			player->x = player->prev_x;
 			player->y = player->prev_y;
+			player->hp -= enemy->default_attack;
+			leave_fight = true;
 			break;
 		case 3:			// health
 			
