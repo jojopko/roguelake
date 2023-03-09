@@ -151,7 +151,7 @@ void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int sel
             break;
     }
     if (f == 0)
-        printf("Inventar' torgovca polon");
+        printf("Inventar' igroka polon");
 }
 //������� ���������
 void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC)
