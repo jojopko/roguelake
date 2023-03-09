@@ -78,6 +78,11 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
                 }
                 f = 1;
                 Inventory_Person->items[i] = *item;
+                if (item->type == Quest)
+                {
+                    player->findQuest == 1;
+                    printf("Kniga naydena, vernites' k iskately\n");
+                }
                 break;
             }
         }
@@ -85,19 +90,29 @@ void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* it
         printf("Net svobodnogo mesta\n");
 }
 
-void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC)
+void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item)
 {
     bool f = 0;
-    for (int i = 0; i < 9; i++) {
+    for (int i = select_item-1; i < select_item; i++) {
         for (int j = 0; j < 9; j++) {
             if (Inventory_NPC->items[j].type == None)
             {
-                Inventory_NPC->items[j] = Inventory_Person->items[i];
-                Inventory_Person->items[i].type = None;
-                Inventory_NPC->cash -= Inventory_Person->items[i].cost;
-                Inventory_Person->cash += Inventory_Person->items[i].cost;
-                f = 1;
-                break;
+                if (Inventory_NPC->cash >= Inventory_Person->items[i].cost)
+                {
+                    Inventory_NPC->items[j] = Inventory_Person->items[i];
+                    Inventory_Person->items[i].type = None;
+                    Inventory_Person->items[i].id = -1;
+                    Inventory_NPC->cash -= Inventory_Person->items[i].cost;
+                    Inventory_Person->cash += Inventory_Person->items[i].cost;
+                    f = 1;
+                    break;
+                }
+                else 
+                { 
+                    printf("Y torgovca nedostatochno sredstv\n"); 
+                    f = 1;
+                    break; 
+                }
             }
         }
         if (f == 1)
@@ -107,21 +122,30 @@ void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC)
         printf("Inventar' torgovca polon");
 }
 
-void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC) 
+void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item) 
 {
     bool f = 0;
-    for (int i = 0; i < 9; i++) {
+    for (int i = select_item-1; i < select_item; i++) {
         for (int j = 0; j < 9; j++) {
             if (Inventory_Person->items[j].type == None)
             {
-                Inventory_Person->items[j] = Inventory_NPC->items[i];
-                Inventory_NPC->items[i].type = None;
-                Inventory_Person->cash -= Inventory_NPC->items[i].cost;
-                Inventory_NPC->cash += Inventory_NPC->items[i].cost;
-                f = 1;
-                break;
+                if (Inventory_Person->cash >= Inventory_NPC->items[i].cost)
+                {
+                    Inventory_Person->items[j] = Inventory_NPC->items[i];
+                    Inventory_NPC->items[i].type = None;
+                    Inventory_NPC->items[i].id = -1;
+                    Inventory_Person->cash -= Inventory_NPC->items[i].cost;
+                    Inventory_NPC->cash += Inventory_NPC->items[i].cost;
+                    f = 1;
+                    break;
+                }
+                else
+                {
+                    printf("Y vas nedostatochno sredstv\n");
+                    f = 1;
+                    break;
+                }
             }
-            else printf("Inventar' igroka polon");
         }
         if (f == 1)
             break;
@@ -142,47 +166,47 @@ void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC)
     {
     case 1:
         if (Inventory_Person->items[0].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 2:
         if (Inventory_Person->items[1].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 3:
         if (Inventory_Person->items[2].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 4:
         if (Inventory_Person->items[3].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 5:
         if (Inventory_Person->items[4].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 6:
         if (Inventory_Person->items[5].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 7:
         if (Inventory_Person->items[6].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 8:
         if (Inventory_Person->items[7].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 9:
         if (Inventory_Person->items[8].type != None)
-            item_sell_dop(Inventory_Person, Inventory_NPC);
+            item_sell_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
         
@@ -205,47 +229,47 @@ void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC)
     {
     case 1:
         if (Inventory_NPC->items[0].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 2: 
         if (Inventory_NPC->items[1].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 3:
         if (Inventory_NPC->items[2].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 4:
         if (Inventory_NPC->items[3].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 5:
         if (Inventory_NPC->items[4].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 6:
         if (Inventory_NPC->items[5].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 7:
         if (Inventory_NPC->items[6].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 8:
         if (Inventory_NPC->items[7].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
     case 9:
         if (Inventory_NPC->items[8].type != None)
-            item_buy_dop(Inventory_Person, Inventory_NPC);
+            item_buy_dop(Inventory_Person, Inventory_NPC, select_item);
         else printf("Yacheyka pysta\n");
         break;
 
@@ -256,7 +280,7 @@ void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC)
 //����������� ���������
 void emptying_the_array(Inventory* Gear)
 {
-    for (int i = 1; i < 9; i++) {
+    for (int i = 0; i < 9; i++) {
         Gear->items[i].type = None;
     }
 }

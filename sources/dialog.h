@@ -11,6 +11,12 @@
 #define scanf_s scanf
 
 #endif
+struct Level;
+struct Player;
+struct NPC;
+struct Inventory;
+struct Enemy;
+struct Item;
 
 enum TypeNPC {
 	Torgovec,
@@ -19,7 +25,7 @@ enum TypeNPC {
 	Provodnik
 };
 
-void dialog(TypeNPC);
-
-
+void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Enemy* enemy, Level* level, Item* item);
+bool is_npc(Level* level, int x, int y);
+void quest2(Item* item);
 #endif

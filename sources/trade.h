@@ -32,7 +32,8 @@ enum ItemType {
     Melee,
     Money,
     Armor,
-    Ranged
+    Ranged,
+    Quest
     // ...
 };
 
@@ -62,7 +63,7 @@ NPC* spawn_NPC(int x, int y, Inventory Inventory_NPC);
 
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage);
 Item* items(ItemType type, int value, int id, const char* name, int cost, int damage);
-void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC);
-void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC);
+void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item);
+void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item);
 #endif
 
