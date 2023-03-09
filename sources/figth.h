@@ -51,4 +51,6 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 
 void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
 
+bool is_enemy(Level * level, int x, int y);
+
 #endif

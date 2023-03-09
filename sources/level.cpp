@@ -172,14 +172,6 @@ bool is_wall(Level * level, int x, int y) {
     return false;
 }
 
-bool is_enemy(Level* level, int x, int y) {
-    char* field = level->field;
-    int index = y * level->w + x;
-    printf("%d", index);
-    if (field[index] == 'A')
-        return true;
-    return false;
-}
 
 
 

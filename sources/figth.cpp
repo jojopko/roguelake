@@ -160,3 +160,11 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 
 }
 
+// FIXME: почему то кода выходишь из боя, потом нельзя сного начать биться
+bool is_enemy(Level* level, int x, int y) {
+    char* field = level->field;
+    int index = y * level->w + x;
+    if (field[index] == 'A')
+        return true;
+    return false;
+}
