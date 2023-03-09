@@ -27,5 +27,6 @@ enum TypeNPC {
 
 void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Enemy* enemy, Level* level, Item* item);
 bool is_npc(Level* level, int x, int y);
+bool is_book(Level* level, int x, int y);
 void quest2(Item* item);
 #endif
