@@ -187,7 +187,7 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 					break;
 				}
 			}
-			if (f == 0){
+			if (f == 1){
 				// printf("Net aptechki");
 				player->hp -= enemy->default_attack;
 			}
