@@ -72,7 +72,7 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 		}
 		else if (npc->type == Quest2)
 		{
-			printf("Zdravstvyi pytnik, pomogi mne nayti knigy, on gde-to nepodaleky, viglyadit kak (K). Prinesi mne ee.\n 1 - Ya soglsen.\n 2 - Polychit' nagrady\n 3 - Ya ne bydy brat'sya za eto. (Leave)");
+			printf("Zdravstvyi pytnik, pomogi mne nayti knigy, ona gde-to nepodaleky, viglyadit kak (K). Prinesi mne ee.\n 1 - Ya soglsen.\n 2 - Polychit' nagrady\n 3 - Ya ne bydy brat'sya za eto. (Leave)");
 			scanf_s("%d", &answer_choice);
 			switch (answer_choice)
 			{
