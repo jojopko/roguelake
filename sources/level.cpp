@@ -209,7 +209,8 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
     int enemy_cam_x = (enemy->x - camera->offset_x);
     int enemy_cam_y = (enemy->y - camera->offset_y);
     if((enemy_cam_x >= 0 && enemy_cam_x < camera->w) && 
-       (enemy_cam_y >= 0 && enemy_cam_y < camera->h)) {
+       (enemy_cam_y >= 0 && enemy_cam_y < camera->h) &&
+       enemy->hp > 0) {
         camera->surface[enemy_cam_y * camera->w + enemy_cam_x] = 'A';
     }
 }
@@ -218,6 +219,8 @@ bool is_wall(Level * level, int x, int y) {
     char * field = level->field;
     int index = y * level->w + x;
     if (field[index] == '#')
+        return true;
+    if (field[index] == '@')
         return true;
     return false;
 }
