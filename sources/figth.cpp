@@ -183,7 +183,7 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 			player->y = player->prev_y;
 			player->hp -= enemy->default_attack;
 			leave_fight = true;
-			break;k 
+			break;
 		case 3:			// health
 			
 			for (int i = 0; i < 9; i++) {
