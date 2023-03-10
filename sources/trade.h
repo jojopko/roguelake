@@ -55,15 +55,26 @@ struct Inventory {
 
 
 Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage, int x, int y);
-void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item);
+
+void add_item_to_inventory(Player* player, Item* item);
+
+void add_items(Player * player, Item *items, int count);
+
 void item_sell(Inventory* Inventory_Person, Inventory* Inventory_NPC);
+
 void item_buy(Inventory* Inventory_Person, Inventory* Inventory_NPC);
+
 void emptying_the_array(Inventory* Gear);
+
 NPC* spawn_NPC(int x, int y, Inventory *Inventory_NPC);
 
 void print_item_info(ItemType type, int value, const char* name, int cost, int damage);
+
 Item* items(ItemType type, int value, int id, const char* name, int cost, int damage);
+
 void item_sell_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item);
+
 void item_buy_dop(Inventory* Inventory_Person, Inventory* Inventory_NPC, int select_item);
+
 #endif
 
