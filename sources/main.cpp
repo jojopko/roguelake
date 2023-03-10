@@ -4,6 +4,7 @@
 #include "dialog.h"
 
 
+
 int main() {
     //Тестовый код для движения. Закинуть в main и раскоментить
     srand(123);
@@ -20,18 +21,33 @@ int main() {
     if (!load_level("../assets/level1.txt\0", level))
         return 2;
 
+    Enemy * enemies[10] = {
+        Enemy_Init(12,11,100,10),
+        Enemy_Init(13,11,100,10),
+        Enemy_Init(14,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10),
+        Enemy_Init(15,11,100,10)
+    };
+
     while (true){
         move_camera(cam, player);
         draw_level(cam, level);
         // draw_item(cam, )
-        draw_enemy(cam, enemy);
+        for (int i = 0; i < 10; i++) {
+            Enemy_AI(enemies[i], level);
+            draw_enemy(cam, enemies[i]);
+            Start_Fight(player, enemies[i], &a, level);
+        }
         draw_npc(cam, npc);
         draw_player(cam, player);
         draw_stats(cam, player);
         dialog(player, npc, &a, &b, level);
-        Start_Fight(player, enemy, &a, level);
         draw(cam);
-        Enemy_AI(enemy, level);
         if (player->hp <= 0){
             clear(cam);
             printf("Game over!");
