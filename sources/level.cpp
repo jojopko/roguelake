@@ -232,7 +232,21 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
 void draw_enemies(Camera * camera, const Enemy * enemies, int count) {
     for (int i = 0; i < count; i++) {
         draw_enemy(camera, &enemies[i]);
+    }void draw_item(Camera * camera, const Item * item){
+    int item_cam_x = (item->x - camera->offset_x);
+    int player_cam_y = (item->y - camera->offset_y);
+    if((item_cam_x >= 0 && item_cam_x < camera->w) && 
+       (player_cam_y >= 0 && player_cam_y < camera->h)) {
+        if (item->type == Health)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = 'O';
+        else if (item->type == Melee)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
+        else if (item->type == Money)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = '0';
+        else if (item->type == Quest)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = 'K';
     }
+}
 }
 
 void draw_npc(Camera * camera, const NPC * npc){
@@ -267,6 +281,8 @@ bool is_wall(const Level * level, int x, int y) {
     return false;
 }
 
-
+void save(Player *player) {
+    FILE * fd = fopen("");
+}
 
 

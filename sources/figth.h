@@ -36,6 +36,7 @@ struct Player {
 	bool findQuest = 0;
 	Camera* cam;
 	Inventory * inventory;
+	int level;
 };
 
 struct Enemy {
