@@ -2,6 +2,9 @@
 #define _DIALOG_H_
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+
 #ifdef _WIN32
 
 #define scanf_s scanf_s
@@ -22,11 +25,13 @@ enum TypeNPC {
 	Torgovec,
 	Quest1,
 	Quest2,
-	Provodnik
+	Provodnik,
+	Casino
 };
 
 void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Level* level);
 bool is_npc(Level* level, int x, int y);
 bool is_book(Level* level, int x, int y);
 void quest2();
+void casino_play(Inventory* Inventory_Person, Player* player);
 #endif
