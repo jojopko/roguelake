@@ -208,6 +208,8 @@ void draw_item(Camera * camera, const Item * item){
             camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
         else if (item->type == Money)
             camera->surface[player_cam_y * camera->w + item_cam_x] = '0';
+        else if (item->type == Quest)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = 'K';
     }
 }
 
