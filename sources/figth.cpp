@@ -8,7 +8,7 @@
 //Боевка.Протестировать всю систему : создать несколько предметов разных типов, эксперементировать с инвентарями в условиях боя.
 
 // Добавить функцию инициализации Player (чекай spawn_item)
-Player* Player_Init(int x, int y, int hp, int attack ) {
+Player* Player_Init(int x, int y, int hp, int attack) {
 	Player* player = (Player*)malloc(sizeof(Player));
 	player->x = x;
 	player->y = y;
@@ -18,17 +18,18 @@ Player* Player_Init(int x, int y, int hp, int attack ) {
 }
 
 
-Enemy* Enemy_Init(int x, int y, int hp, int attack) {
+Enemy* Enemy_Init(int x, int y, int hp, int attack, int money) {
 	Enemy* enemy = (Enemy*)malloc(sizeof(Enemy));
 	enemy->x = x;
 	enemy->y = y;
 	enemy->hp = hp;
 	enemy->default_attack = attack;
+	enemy->money = money;
 	return enemy;
 
 }
 
-void Enemy_AI(Enemy* enemy, Level* level) {
+void Enemy_AI(Enemy* enemy, const Level* level) {
 	int hp_post;
 	int random;
 	hp_post=enemy->hp;
@@ -142,7 +143,7 @@ void movePlayer(Player* player, Level* level) {
 
 #endif
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, const Level* level) {
 	// if (is_enemy(level, player->x, player->y)) {
 	// 	FigthPlayer(player, enemy, inventory,level);
 	// }
@@ -153,7 +154,7 @@ void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 }
 
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level) {
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, const Level* level) {
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
@@ -210,10 +211,44 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* leve
 }
 
 // FIXME: почему то кода выходишь из боя, потом нельзя сного начать биться
-bool is_enemy(Level* level, int x, int y) {
+bool is_enemy(const Level* level, int x, int y) {
     char* field = level->field;
     int index = y * level->w + x;
     if (field[index] == 'A')
         return true;
     return false;
+}
+
+void move_enemies(Enemy * enemies, int count, const Level * level, Player * player) {
+	for (int i = 0; i < count; i++) {
+		Enemy_AI(&enemies[i], level);
+		Start_Fight(player, &enemies[i], player->inventory, level);
+	}
+}
+
+void spawn_enemies(Enemy * enemies, int count, const Level * level) {
+    char * field = level->field;
+    int enemy_id = 0;
+    for (int i = 0; i < count; i++) {
+        enemies[i].hp = 0;
+    }
+    for (int y = 0; y < level->h; y++) {
+        for (int x = 0; x < level->w; x++) {
+            int index = y * level->w + x;
+            char c = field[index];
+            if (c == 'A') {
+                int rand_money = rand() % 100 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                enemies[enemy_id].x = x;
+                enemies[enemy_id].y = y;
+                enemies[enemy_id].hp = 50;
+                enemies[enemy_id].default_attack = 10;
+                enemies[enemy_id].money = rand_money;
+                enemy_id++;
+            }
+            if (enemy_id >= count) {
+                return;
+            }
+        }
+    }
 }

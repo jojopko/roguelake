@@ -35,6 +35,7 @@ struct Player {
 	int killQuestCounter = 0;
 	bool findQuest = 0;
 	Camera* cam;
+	Inventory * inventory;
 };
 
 struct Enemy {
@@ -42,22 +43,29 @@ struct Enemy {
 	int y;
 	int hp;
 	int default_attack;
+	int money;
 };
 
 Player* Player_Init(int x, int y, int hp, int attack);
 
-Enemy* Enemy_Init(int x, int y, int hp, int attack);
+Enemy* Enemy_Init(int x, int y, int hp, int attack, int money);
 
 void setPlayer(Player* player, int dx, int dy, int dhp);
 
 void movePlayer(Player* player, Level* level);
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
+void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, const Level* level);
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, Level* level);
+void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, const Level* level);
 
-bool is_enemy(Level * level, int x, int y);
+bool is_enemy(const Level * level, int x, int y);
 
-void Enemy_AI(Enemy* enemy, Level* level);
+void Enemy_AI(Enemy* enemy, const Level* level);
+
+void spawn_items(Item * items, int count, const Level * level);
+
+void spawn_enemies(Enemy * enemies, int count, const Level * level);
+
+void move_enemies(Enemy * enemies, int count, const Level * level, Player * player);
 
 #endif
