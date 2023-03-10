@@ -21,14 +21,18 @@ int gameloop() {
     NPC npcs[npc_count];
 
     Inventory a;
+    emptying_the_array(&a);
     a.cash = 0;
     camera = init_camera();
     player = Player_Init(1, 1, 100, 10);
     player->cam = camera;
     player->inventory = &a;
+    player->level = 1;
 
     level = init_level();
-    if (!load_level("../assets/level1.txt", level))
+    char filename[256];
+    sprintf(filename, "../assets/level%d.txt\0", player->level);
+    if (!load_level(filename, level))
         return 2;
     
     spawn_enemies(enemies, enemies_count, level);
