@@ -65,6 +65,10 @@ int main() {
     // Player * player = Player_Init(12,12,100,10);
     // Enemy * enemy = Enemy_Init(12,9,10,100);
     // Inventory a;
+
+
+
+    
     // a.items[0] = *spawn_item(Health, 100, 1, "Name\0", 100, 0, -1, -1);
 
     // Camera * cam = init_camera();
