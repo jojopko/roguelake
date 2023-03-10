@@ -21,6 +21,7 @@ short GetKeyState(int virtkey);
 struct Item;
 struct Level;
 struct Inventory;
+struct Camera;
 
 struct Player {
 	int x;
@@ -33,6 +34,7 @@ struct Player {
 	bool killQuest = 0;
 	int killQuestCounter = 0;
 	bool findQuest = 0;
+	Camera* cam;
 };
 
 struct Enemy {

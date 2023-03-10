@@ -97,6 +97,10 @@ void movePlayer(Player* player, Level* level) {
 			(*player).x--;
 
 	}
+	if (GetKeyState(VK_ESCAPE) < 0) {
+		system("cls");
+		exit(0);
+	}
 
 }
 
