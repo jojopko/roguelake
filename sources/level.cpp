@@ -281,8 +281,8 @@ bool is_wall(const Level * level, int x, int y) {
     return false;
 }
 
-void save(Player *player) {
-    FILE * fd = fopen("");
-}
+// void save(Player *player) {
+//     FILE * fd = fopen("");
+// }
 
 
