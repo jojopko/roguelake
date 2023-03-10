@@ -341,6 +341,14 @@ void spawn_items(Item * items, int count, const Level * level) {
                 items[item_id].type = Money;
                 item_id++;
             }
+            if (field[index] == 'K'){
+                items[item_id].type = Quest;
+                items[item_id].value = 1;
+                items[item_id].id = 1001;
+                items[item_id].name = "Kniga\0";
+                items[item_id].x = x;
+                items[item_id].y = y;
+            }
             if (item_id >= count) {
                 return;
             }

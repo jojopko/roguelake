@@ -220,6 +220,46 @@ void spawn_npcs(NPC * npcs, int count, const Level * level) {
                 npcs[npcs_id].y = y;
                 npcs_id++;
             }
+			if (c == 'O') {
+                int rand_money = rand() % 1000 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                npcs[npcs_id].type = Quest1;
+                Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
+				inv->cash = rand_money;
+				inv->items[0] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[1] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[2] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[3] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[4] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[5] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[6] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[7] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[8] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				npcs[npcs_id].Inventory_NPC = inv;
+                npcs[npcs_id].x = x;
+                npcs[npcs_id].y = y;
+                npcs_id++;
+            }
+			if (c == '8') {
+                int rand_money = rand() % 1000 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                npcs[npcs_id].type = Quest1;
+                Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
+				inv->cash = rand_money;
+				inv->items[0] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[1] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[2] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[3] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[4] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[5] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[6] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[7] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[8] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				npcs[npcs_id].Inventory_NPC = inv;
+                npcs[npcs_id].x = x;
+                npcs[npcs_id].y = y;
+                npcs_id++;
+            }
             if (npcs_id >= count) {
                 return;
             }
