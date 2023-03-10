@@ -136,7 +136,6 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 				else
 				{
 					casino_play(Inventory_Person, player);
-					player->CasinoM = 1;
 				}
 				player->x = player->prev_x;
 				player->y = player->prev_y;
@@ -154,6 +153,7 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 void casino_play(Inventory* Inventory_Person, Player* player)
 {
 	int p_dice1, p_dice2, c_dice1, c_dice2, bet;
+	srand(time(NULL));
 	printf("Sdelayte stavky. \n");
 	do {
 		scanf_s("%d", &bet);
