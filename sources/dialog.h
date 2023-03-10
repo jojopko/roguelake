@@ -3,11 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <time.h>
 
 #ifdef _WIN32
 
+#include <windows.h>
 #define scanf_s scanf_s
 
 #else
