@@ -30,9 +30,16 @@ enum TypeNPC {
 	Casino
 };
 
-void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Level* level);
+void dialog(Player* player, NPC* npc, const Level* level);
+
 bool is_npc(Level* level, int x, int y);
+
 bool is_book(Level* level, int x, int y);
+
 void quest2();
+
 void casino_play(Inventory* Inventory_Person, Player* player);
+
+void spawn_npcs(NPC * npcs, int count, const Level * level);
+
 #endif

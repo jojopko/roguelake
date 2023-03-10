@@ -18,7 +18,7 @@ int gameloop() {
     Camera * camera;
     Enemy enemies[enemies_count];
     Item items[items_count];
-    // NPC npcs[npc_count];
+    NPC npcs[npc_count];
 
     Inventory a;
     a.cash = 0;
@@ -33,6 +33,8 @@ int gameloop() {
     
     spawn_enemies(enemies, enemies_count, level);
     spawn_items(items, items_count, level);
+    spawn_npcs(npcs, npc_count, level);
+    
     while(true) {
         move_camera(camera, player);
         draw_level(camera, level);
@@ -40,8 +42,11 @@ int gameloop() {
         draw_enemies(camera, enemies, enemies_count);
         draw_player(camera, player);
         draw_stats(camera, player);
+        draw_npcs(camera, npcs, npc_count);
         draw(camera);
         //events
+        for (int i = 0; i < npc_count; i++)
+            dialog(player, &npcs[i], level);
         add_items(player, items, items_count);
         movePlayer(player, level);
         move_enemies(enemies, enemies_count, level, player);

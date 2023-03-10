@@ -28,7 +28,7 @@ bool is_book(Level* level, int x, int y)
 	return false;
 }
 
-void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* Invenroty_NPC, Level* level)
+void dialog(Player* player, NPC* npc, const Level* level)
 {
 	int answer_choice;
 	// if (is_npc(level, player->x, player->y))
@@ -58,8 +58,8 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 			} while (answer_choice > 3 || answer_choice < 1);
 			switch (answer_choice)
 			{
-			case 1: item_buy(Inventory_Person, Invenroty_NPC); break;
-			case 2: item_sell(Inventory_Person, Invenroty_NPC); break;
+			case 1: item_buy(player->inventory, npc->Inventory_NPC); break;
+			case 2: item_sell(npc->Inventory_NPC, player->inventory); break;
 			case 3: 
 				player->x = player->prev_x;
 				player->y = player->prev_y;
@@ -105,7 +105,7 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 				if (player->findQuest == 1)
 				{
 					printf("Spasibo za pomosh'!\n");
-					Inventory_Person->cash += 200;
+					player->inventory->cash += 200;
 					system("pause");
 				}
 				else
@@ -128,14 +128,14 @@ void dialog(Player* player, NPC* npc, Inventory* Inventory_Person, Inventory* In
 			switch (answer_choice)
 			{
 			case 1:
-				if (Inventory_Person->cash <= 0)
+				if (player->inventory->cash <= 0)
 				{
 					printf("Y vas ne hvataet monet!\n");
 					system("pause");
 				}
 				else
 				{
-					casino_play(Inventory_Person, player);
+					casino_play(player->inventory, player);
 				}
 				player->x = player->prev_x;
 				player->y = player->prev_y;
@@ -189,3 +189,40 @@ void quest2()
 	spawn_item(Quest, 1, 1001, "Kniga", 0, 0, 16, 6);
 }
 
+void spawn_npcs(NPC * npcs, int count, const Level * level) {
+    char * field = level->field;
+    int npcs_id = 0;
+    for (int i = 0; i < count; i++) {
+        npcs[i].x = -1231;
+        npcs[i].y = -1231;
+    }
+    for (int y = 0; y < level->h; y++) {
+        for (int x = 0; x < level->w; x++) {
+            int index = y * level->w + x;
+            char c = field[index];
+            if (c == '&') {
+                int rand_money = rand() % 1000 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                npcs[npcs_id].type = Torgovec;
+                Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
+				inv->cash = rand_money;
+				inv->items[0] = *spawn_item(Health, 100, 123123, "Health\0", 50, 0, -1, -1);
+				inv->items[1] = *spawn_item(Health, 100, 12311233, "Health\0", 50, 0, -1, -1);
+				inv->items[2] = *spawn_item(Health, 100, 1236123, "Health\0", 50, 0, -1, -1);
+				inv->items[3] = *spawn_item(Melee, 10, 123133765, "Knife\0", 150, 10, -1, -1);
+				inv->items[4] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[5] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[6] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[7] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[8] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				npcs[npcs_id].Inventory_NPC = inv;
+                npcs[npcs_id].x = x;
+                npcs[npcs_id].y = y;
+                npcs_id++;
+            }
+            if (npcs_id >= count) {
+                return;
+            }
+        }
+    }
+}
