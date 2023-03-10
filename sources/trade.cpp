@@ -1,4 +1,5 @@
 #include "trade.h"
+#include "level.h"
 
 
 Item* spawn_item(ItemType type, int value, int id, const char* name, int cost, int damage, int x, int y)
@@ -63,29 +64,41 @@ Item* items(ItemType type, int value, int id, const char* name, int cost, int da
     return healing_potion, sword, bow, breastplate;
 }
 
-void add_item_to_inventory(Inventory* Inventory_Person, Player* player, Item* item)
+void add_items(Player * player, Item *items, int count) {
+    for (int i = 0; i < count; i++) {
+        add_item_to_inventory(player, &items[i]);
+    }
+}
+
+void add_item_to_inventory(Player* player, Item* item)
 {
     bool f = 0; 
-    if ((player->x == item->x) && (player->y == item->y))
+    if ((player->x == item->x) && (player->y == item->y)) {
+        if (item->type == Money)
+        {
+            player->inventory->cash += item->value;
+            item->type = None;
+            return;
+        }
         for (int i = 0; i < 9; i++)
         {
-            if (Inventory_Person->items[i].type == None)
+            if (player->inventory->items[i].type == None)
             {
-                if (item->type == Money)
-                {
-                    Inventory_Person->cash += item->value;
-                    break;
-                }
-                f = 1;
-                Inventory_Person->items[i] = *item;
+                player->inventory->items[i] = *item;
+                item->type = None;
                 if (item->type == Quest)
                 {
                     player->findQuest == 1;
-                    printf("Kniga naydena, vernites' k iskately\n");
+                    // printf("Kniga naydena, vernites' k iskately\n");
                 }
+                f = 1;
                 break;
             }
         }
+    }
+    else {
+        return;
+    }
     if (f == 0)
         printf("Net svobodnogo mesta\n");
 }
@@ -282,6 +295,56 @@ void emptying_the_array(Inventory* Gear)
 {
     for (int i = 0; i < 9; i++) {
         Gear->items[i].type = None;
+    }
+}
+
+void spawn_items(Item * items, int count, const Level * level) {
+    char * field = level->field;
+    int item_id = 0;
+    for (int i = 0; i < count; i++) {
+        items[i].id = i;
+        items[i].type = None;
+        items[i].x = -1;
+        items[i].y = -1;
+    }
+    for (int y = 0; y < level->h; y++) {
+        for (int x = 0; x < level->w; x++) {
+            int index = y * level->w + x;
+            if (field[index] == 'O') {
+                int rand_cost = rand() % 100 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                items[item_id].x = x;
+                items[item_id].y = y;
+                items[item_id].cost = rand_cost;
+                items[item_id].value = 100;
+                items[item_id].name = "Health\0";
+                items[item_id].type = Health;
+                item_id++;
+            }
+            if (field[index] == '!') {
+                int rand_cost = rand() % 100 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                items[item_id].x = x;
+                items[item_id].y = y;
+                items[item_id].cost = rand_cost;
+                items[item_id].value = 20;
+                items[item_id].name = "Knife\0";
+                items[item_id].type = Melee;
+                item_id++;
+            }
+            if (field[index] == '0') {
+                int rand_cost = rand() % 100 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                items[item_id].x = x;
+                items[item_id].y = y;
+                items[item_id].value = rand_cost;
+                items[item_id].type = Money;
+                item_id++;
+            }
+            if (item_id >= count) {
+                return;
+            }
+        }
     }
 }
 
