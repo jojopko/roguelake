@@ -143,18 +143,14 @@ void movePlayer(Player* player, Level* level) {
 
 #endif
 
-void Start_Fight(Player* player, Enemy* enemy, Inventory* inventory, const Level* level) {
-	// if (is_enemy(level, player->x, player->y)) {
-	// 	FigthPlayer(player, enemy, inventory,level);
-	// }
-
+void Start_Fight(Player* player, Enemy* enemy, const Level* level) {
 	if (player->x == enemy->x && player->y == enemy->y){
-		FigthPlayer(player, enemy, inventory, level);
+		FigthPlayer(player, enemy, level);
 	}
 }
 
 
-void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, const Level* level) {
+void FigthPlayer(Player* player, Enemy* enemy, const Level* level) {
 	int n;
 	bool leave_fight = false;
 	bool f = 0;
@@ -185,8 +181,8 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, const Level
 		case 3:			// health
 			
 			for (int i = 0; i < 9; i++) {
-				if (inventory->items[i].type == Health) {
-					player->hp += inventory->items[i].value; //�������� ����� ������� ���� �������
+				if (player->inventory->items[i].type == Health) {
+					player->hp += player->inventory->items[i].value; //�������� ����� ������� ���� �������
 					player->hp -= enemy->default_attack;
 					f = 1;
 					break;
@@ -204,7 +200,7 @@ void FigthPlayer(Player* player, Enemy* enemy, Inventory* inventory, const Level
 		player->killQuestCounter += 1;
 		if (player->killQuestCounter >= 10)
 		{
-			inventory->cash += 200;
+			player->inventory->cash += 200;
 			player->killQuest = 0;
 		}
 	}
@@ -222,7 +218,7 @@ bool is_enemy(const Level* level, int x, int y) {
 void move_enemies(Enemy * enemies, int count, const Level * level, Player * player) {
 	for (int i = 0; i < count; i++) {
 		Enemy_AI(&enemies[i], level);
-		Start_Fight(player, &enemies[i], player->inventory, level);
+		Start_Fight(player, &enemies[i], level);
 	}
 }
 
