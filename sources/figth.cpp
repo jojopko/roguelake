@@ -162,15 +162,13 @@ void FigthPlayer(Player* player, Enemy* enemy, const Level* level) {
 		} while (n > 3);
 		switch (n) {
 		case 1:			// attack
-			if (player->item_weapon != NULL && player->item_weapon->type!=None) {
-				player->hp -= enemy->default_attack;
-				enemy->hp -= player->default_attack + player->item_weapon->value;
+			for (int i = 0; i < 9; i++){
+				if (player->inventory->items[i].type == Melee){
+					enemy->hp -= player->inventory->items[i].value;
+				}
 			}
-			else {
-				player->hp -= enemy->default_attack;
-				enemy->hp -= player->default_attack;
-				
-			}
+			player->hp -= enemy->default_attack;
+			enemy->hp -= player->default_attack;
 			break;
 		case 2:			// leave fight
 			player->x = player->prev_x;
@@ -179,11 +177,11 @@ void FigthPlayer(Player* player, Enemy* enemy, const Level* level) {
 			leave_fight = true;
 			break;
 		case 3:			// health
-			
 			for (int i = 0; i < 9; i++) {
 				if (player->inventory->items[i].type == Health) {
 					player->hp += player->inventory->items[i].value; //�������� ����� ������� ���� �������
 					player->hp -= enemy->default_attack;
+					player->inventory->items[i].type = None;
 					f = 1;
 					break;
 				}
@@ -194,6 +192,9 @@ void FigthPlayer(Player* player, Enemy* enemy, const Level* level) {
 			}
 			
 		}
+	}
+	if(enemy->hp <= 0){
+		player->inventory->cash += 50;
 	}
 	if (player->killQuest == 1 && enemy->hp <= 0)
 	{
