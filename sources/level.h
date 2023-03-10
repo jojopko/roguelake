@@ -37,7 +37,11 @@ void draw_player(Camera *camera, const Player * player);
 
 void draw_item(Camera * camera, const Item * item);
 
+void draw_items(Camera * camera, const Item * items, int count);
+
 void draw_enemy(Camera * camera, const Enemy * enemy);
+
+void draw_enemies(Camera * camera, const Enemy * enemies, int count);
 
 void draw_stats(Camera * camera, const Player * player);
 
@@ -49,11 +53,13 @@ void draw_log2(Camera * camera, const char * buffer100);
 
 void draw_npc(Camera * camera, const NPC * npc);
 
+void draw_npcs(Camera * camera, const NPC * npcs, int count);
+
 #if __linux__
 int getch();
 #endif
 
-bool is_wall(Level * level, int x, int y);
+bool is_wall(const Level * level, int x, int y);
 
 
 

@@ -55,7 +55,7 @@ bool load_level(const char * filename, Level * level) {
                     *current = '#';
                     break;
                 default:
-                    *current = '#';
+                    *current = c;
             }
         }
     }
@@ -72,7 +72,11 @@ void draw_level(Camera * camera, const Level * level) {
                 camera->surface[cam_y * camera->w + cam_x] = '#'; // если вы ходит за края карты то "#"
             }
             else{
-                camera->surface[cam_y * camera->w + cam_x] = level->field[gr_y * level->w + gr_x];
+                char c = level->field[gr_y * level->w + gr_x];
+                if (c == '#')
+                    camera->surface[cam_y * camera->w + cam_x] = '#';
+                else
+                    camera->surface[cam_y * camera->w + cam_x] = ' ';
             }
         }
     }
@@ -82,7 +86,10 @@ void draw_stats(Camera * camera, const Player * player) {
     bool fill_empty = false;
     char stat[100] = {};
     int attack = player->default_attack + (player->item_weapon != NULL ? player->item_weapon->damage : 0);
-    sprintf(stat, "HP:%d AP:%d X:%d Y:%d", player->hp, attack, player->x, player->y);
+    sprintf(stat, "HP:%d AP:%d M:%d [%d][%d][%d][%d][%d][%d][%d][%d][%d] P:(%d:%d)", player->hp, attack, player->inventory->cash,
+        player->inventory->items[0].type,player->inventory->items[1].type,player->inventory->items[2].type,player->inventory->items[3].type,
+        player->inventory->items[4].type,player->inventory->items[5].type,player->inventory->items[6].type,player->inventory->items[7].type,
+        player->inventory->items[8].type, player->x, player->y);
     for (int i = 0; i < camera->w; i++){
         if(fill_empty)
             camera->surface[i] = ' ';
@@ -199,9 +206,14 @@ void draw_item(Camera * camera, const Item * item){
             camera->surface[player_cam_y * camera->w + item_cam_x] = 'O';
         else if (item->type == Melee)
             camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
-        else 
-            camera->surface[player_cam_y * camera->w + item_cam_x] = '-';
+        else if (item->type == Money)
+            camera->surface[player_cam_y * camera->w + item_cam_x] = '0';
+    }
+}
 
+void draw_items(Camera * camera, const Item * items, int count) {
+    for (int i = 0; i < count; i++) {
+        draw_item(camera, &items[i]);
     }
 }
 
@@ -212,6 +224,12 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
        (enemy_cam_y >= 0 && enemy_cam_y < camera->h) &&
        enemy->hp > 0) {
         camera->surface[enemy_cam_y * camera->w + enemy_cam_x] = 'A';
+    }
+}
+
+void draw_enemies(Camera * camera, const Enemy * enemies, int count) {
+    for (int i = 0; i < count; i++) {
+        draw_enemy(camera, &enemies[i]);
     }
 }
 
@@ -231,7 +249,13 @@ void draw_npc(Camera * camera, const NPC * npc){
     }
 }
 
-bool is_wall(Level * level, int x, int y) {
+void draw_npcs(Camera * camera, const NPC * npcs, int count) {
+    for (int i = 0; i < count; i++) {
+        draw_npc(camera, &npcs[i]);
+    }
+}
+
+bool is_wall(const Level * level, int x, int y) {
     char * field = level->field;
     int index = y * level->w + x;
     if (field[index] == '#')
