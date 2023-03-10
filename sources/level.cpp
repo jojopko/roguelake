@@ -84,7 +84,7 @@ void draw_level(Camera * camera, const Level * level) {
 
 void draw_stats(Camera * camera, const Player * player) {
     bool fill_empty = false;
-    char stat[100] = {};
+    char stat[200] = {};
     int attack = player->default_attack;
     sprintf(stat, "HP:%d AP:%d M:%d [%d][%d][%d][%d][%d][%d][%d][%d][%d] P:(%d:%d)", player->hp, attack, player->inventory->cash,
         player->inventory->items[0].type,player->inventory->items[1].type,player->inventory->items[2].type,player->inventory->items[3].type,

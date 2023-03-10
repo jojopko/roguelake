@@ -58,8 +58,8 @@ void dialog(Player* player, NPC* npc, const Level* level)
 			} while (answer_choice > 3 || answer_choice < 1);
 			switch (answer_choice)
 			{
-			case 1: item_buy(player->inventory, npc->Inventory_NPC); break;
-			case 2: item_sell(npc->Inventory_NPC, player->inventory); break;
+			case 1: item_buy(player->inventory, npc->Inventory_NPC); break; 
+			case 2: item_sell(player->inventory, npc->Inventory_NPC); break;
 			case 3: 
 				player->x = player->prev_x;
 				player->y = player->prev_y;
