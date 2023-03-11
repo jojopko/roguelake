@@ -84,7 +84,7 @@ void draw_level(Camera * camera, const Level * level) {
 
 void draw_stats(Camera * camera, const Player * player) {
     bool fill_empty = false;
-    char stat[200] = {};
+    char stat[100] = {};
     int attack = player->default_attack;
     sprintf(stat, "HP:%d AP:%d M:%d [%d][%d][%d][%d][%d][%d][%d][%d][%d] P:(%d:%d)", player->hp, attack, player->inventory->cash,
         player->inventory->items[0].type,player->inventory->items[1].type,player->inventory->items[2].type,player->inventory->items[3].type,
@@ -197,21 +197,6 @@ void draw_player(Camera *camera, const Player * player){
     }
 }
 
-void draw_item(Camera * camera, const Item * item){
-    int item_cam_x = (item->x - camera->offset_x);
-    int player_cam_y = (item->y - camera->offset_y);
-    if((item_cam_x >= 0 && item_cam_x < camera->w) && 
-       (player_cam_y >= 0 && player_cam_y < camera->h)) {
-        if (item->type == Health)
-            camera->surface[player_cam_y * camera->w + item_cam_x] = 'O';
-        else if (item->type == Melee)
-            camera->surface[player_cam_y * camera->w + item_cam_x] = '!';
-        else if (item->type == Money)
-            camera->surface[player_cam_y * camera->w + item_cam_x] = '0';
-        else if (item->type == Quest)
-            camera->surface[player_cam_y * camera->w + item_cam_x] = 'K';
-    }
-}
 
 void draw_items(Camera * camera, const Item * items, int count) {
     for (int i = 0; i < count; i++) {
@@ -232,7 +217,10 @@ void draw_enemy(Camera * camera, const Enemy * enemy) {
 void draw_enemies(Camera * camera, const Enemy * enemies, int count) {
     for (int i = 0; i < count; i++) {
         draw_enemy(camera, &enemies[i]);
-    }void draw_item(Camera * camera, const Item * item){
+    }
+} 
+
+void draw_item(Camera * camera, const Item * item) {
     int item_cam_x = (item->x - camera->offset_x);
     int player_cam_y = (item->y - camera->offset_y);
     if((item_cam_x >= 0 && item_cam_x < camera->w) && 
@@ -247,7 +235,6 @@ void draw_enemies(Camera * camera, const Enemy * enemies, int count) {
             camera->surface[player_cam_y * camera->w + item_cam_x] = 'K';
     }
 }
-}
 
 void draw_npc(Camera * camera, const NPC * npc){
     int npc_cam_x = (npc->x - camera->offset_x);
@@ -257,11 +244,13 @@ void draw_npc(Camera * camera, const NPC * npc){
         if (npc->type == Torgovec)
             camera->surface[npc_cam_y * camera->w + npc_cam_x] = '&';
         if (npc->type == Quest1)
-            camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'O';
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'U';
         if (npc->type == Quest2)
             camera->surface[npc_cam_y * camera->w + npc_cam_x] = '8';
         if (npc->type == Provodnik)
             camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'Q';
+        if (npc->type == Casino)
+            camera->surface[npc_cam_y * camera->w + npc_cam_x] = 'C';
     }
 }
 
@@ -281,8 +270,19 @@ bool is_wall(const Level * level, int x, int y) {
     return false;
 }
 
-// void save(Player *player) {
-//     FILE * fd = fopen("");
-// }
+void save(Player *player) {
+    FILE * fd = fopen("save.bin", "w+b");
+    if (fd){
+        fwrite(player, sizeof(Player), 1, fd);
+        fclose(fd);
+    }
+}
 
+void load(Player * player) {
+    FILE * fd = fopen("save.bin", "r+b");
+    if (fd){   
+        fread(player, sizeof(Player), 1, fd);
+        fclose(fd);
+    }
+}
 

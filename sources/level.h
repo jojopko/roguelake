@@ -61,7 +61,9 @@ int getch();
 
 bool is_wall(const Level * level, int x, int y);
 
+void save(Player *player);
 
+void load(Player * player);
 
 
 

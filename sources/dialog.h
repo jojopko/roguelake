@@ -30,7 +30,7 @@ enum TypeNPC {
 	Casino
 };
 
-void dialog(Player* player, NPC* npc, const Level* level);
+void dialog(Player* player, NPC* npc, Level* level);
 
 bool is_npc(Level* level, int x, int y);
 

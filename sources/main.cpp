@@ -38,6 +38,8 @@ int gameloop() {
     spawn_enemies(enemies, enemies_count, level);
     spawn_items(items, items_count, level);
     spawn_npcs(npcs, npc_count, level);
+    // save(player);
+    // load(player);
     
     while(true) {
         move_camera(camera, player);
@@ -51,6 +53,21 @@ int gameloop() {
         //events
         for (int i = 0; i < npc_count; i++)
             dialog(player, &npcs[i], level);
+        if (player->do_new_level){
+            player->level++;
+            sprintf(filename, "../assets/level%d.txt\0", player->level);
+            if (load_level(filename, level)){
+                spawn_enemies(enemies, enemies_count, level);
+                spawn_items(items, items_count, level);
+                spawn_npcs(npcs, npc_count, level);
+                player->do_new_level = false;
+            }
+            else {
+                return 2;
+            }
+            player->x = 24;
+            player->y = 24;
+        }
         add_items(player, items, items_count);
         movePlayer(player, level);
         move_enemies(enemies, enemies_count, level, player);

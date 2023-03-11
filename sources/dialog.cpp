@@ -10,7 +10,7 @@ bool is_npc(Level* level, int x, int y)
 	int index = y * level->w + x;
 	if (field[index] == '&')
 		return true;
-	if (field[index] == 'O')
+	if (field[index] == 'U')
 		return true;
 	if (field[index] == '8')
 		return true;
@@ -28,7 +28,7 @@ bool is_book(Level* level, int x, int y)
 	return false;
 }
 
-void dialog(Player* player, NPC* npc, const Level* level)
+void dialog(Player* player, NPC* npc, Level* level)
 {
 	int answer_choice;
 	// if (is_npc(level, player->x, player->y))
@@ -42,7 +42,16 @@ void dialog(Player* player, NPC* npc, const Level* level)
 			} while (answer_choice > 2 || answer_choice < 1);
 			switch (answer_choice)
 			{
-			case 1: printf("Da"); break; // add next level
+			case 1: 
+				printf("Da");
+				if (player->inventory->cash > 1000){
+					save(player);
+					player->do_new_level = true;
+				}
+				else {
+					printf("Ne dostatochno deneg!");
+				}
+				break; // add next level
 			case 2:
 				printf("Net");
 				player->x = player->prev_x;
@@ -102,21 +111,21 @@ void dialog(Player* player, NPC* npc, const Level* level)
 				player->y = player->prev_y;
 				break; //Zapysk mission
 			case 2:
-				if (player->findQuest == 1)
-				{
-					printf("Spasibo za pomosh'!\n");
-					player->inventory->cash += 200;
-					system("pause");
+				for (int i = 0; i < 9; i++) {
+					if (player->inventory->items[i].id == 1001)
+					{
+						printf("Spasibo za pomosh'!\n");
+						player->inventory->cash += 200;
+						system("pause");
+						break;
+					}
+					else
+					{
+						printf("Ti mne esh'e ne prines moy knigy!!!");
+						system("pause");
+						break;
+					}
 				}
-				else
-				{
-					printf("Ti mne esh'e ne prines moy knigy!!!");
-					system("pause");
-				}
-					player->x = player->prev_x;
-					player->y = player->prev_y;
-				//leave
-				break; //leave
 			}
 		}
 		else if (npc->type == Casino)
@@ -220,7 +229,7 @@ void spawn_npcs(NPC * npcs, int count, const Level * level) {
                 npcs[npcs_id].y = y;
                 npcs_id++;
             }
-			if (c == 'O') {
+			if (c == 'U') {
                 int rand_money = rand() % 1000 + 1;
                 // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
                 npcs[npcs_id].type = Quest1;
@@ -243,7 +252,47 @@ void spawn_npcs(NPC * npcs, int count, const Level * level) {
 			if (c == '8') {
                 int rand_money = rand() % 1000 + 1;
                 // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
-                npcs[npcs_id].type = Quest1;
+                npcs[npcs_id].type = Quest2;
+                Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
+				inv->cash = rand_money;
+				inv->items[0] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[1] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[2] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[3] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[4] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[5] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[6] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[7] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[8] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				npcs[npcs_id].Inventory_NPC = inv;
+                npcs[npcs_id].x = x;
+                npcs[npcs_id].y = y;
+                npcs_id++;
+            }
+			if (c == 'Q') {
+                int rand_money = rand() % 1000 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                npcs[npcs_id].type = Provodnik;
+                Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
+				inv->cash = rand_money;
+				inv->items[0] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[1] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[2] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[3] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[4] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[5] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[6] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[7] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				inv->items[8] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);
+				npcs[npcs_id].Inventory_NPC = inv;
+                npcs[npcs_id].x = x;
+                npcs[npcs_id].y = y;
+                npcs_id++;
+            }
+			if (c == 'C') {
+                int rand_money = rand() % 1000 + 1;
+                // enemies[enemy_id] = *Enemy_Init(x, y, 50, 10, rand_money);
+                npcs[npcs_id].type = Casino;
                 Inventory * inv = (Inventory *) malloc(sizeof(Inventory));
 				inv->cash = rand_money;
 				inv->items[0] = *spawn_item(None, 0, 0, "a\0", 0, 0, -1, -1);

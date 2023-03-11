@@ -37,6 +37,7 @@ struct Player {
 	Camera* cam;
 	Inventory * inventory;
 	int level;
+	bool do_new_level;
 };
 
 struct Enemy {
