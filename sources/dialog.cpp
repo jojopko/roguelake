@@ -50,6 +50,8 @@ void dialog(Player* player, NPC* npc, Level* level)
 				}
 				else {
 					printf("Ne dostatochno deneg!");
+					player->x = player->prev_x;
+					player->y = player->prev_y;
 				}
 				break; // add next level
 			case 2:
@@ -126,6 +128,8 @@ void dialog(Player* player, NPC* npc, Level* level)
 						break;
 					}
 				}
+				player->x = player->prev_x;
+				player->y = player->prev_y;
 			}
 		}
 		else if (npc->type == Casino)
