@@ -119,6 +119,7 @@ void dialog(Player* player, NPC* npc, Level* level)
 						printf("Spasibo za pomosh'!\n");
 						player->inventory->cash += 200;
 						player->inventory->items[i].id = None;
+						player->inventory->items[i].type = None;
 						system("pause");
 						break;
 					}
